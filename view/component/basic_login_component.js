@@ -42,7 +42,7 @@ export function AuthUIPage(props) {
             >Forgot your login details? Get help sign in.</Text>
         </TouchableOpacity>
         <Text style={loginStyle.textOR}>OR</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={props.facebookAuth}>
             <View style={loginStyle.loginFacebookView}>
                 <Image style={loginStyle.facebookLogo} source={require('../../assets/fb.png')}/>
                 <Text style={loginStyle.textLoginWithFacebook}>Log in with Facebook</Text>
@@ -73,12 +73,12 @@ export function AuthUISingUpPage(props) {
         <LoginButton name="Sign up" onPress={props.onPress} username={userName}
                      password={password} fullName={fullName} email={email} isLogin={false}/>
         <Text style={loginStyle.textOR}>OR</Text>
-        <TouchableHighlight>
+        <TouchableOpacity onPress={props.facebookAuth}>
             <View style={loginStyle.loginFacebookView}>
                 <Image style={loginStyle.facebookLogo} source={require('../../assets/fb.png')}/>
                 <Text style={loginStyle.textLoginWithFacebook}>Signup with Facebook</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
     </View>
 }
 
