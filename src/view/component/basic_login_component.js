@@ -24,7 +24,7 @@ export function AuthUIPage(props) {
     const [userName, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return <View style={loginStyle.loginForm}>
-        <Image style={loginStyle.imageLogo} source={require('../../assets/Instagram-Logo.png')}/>
+        <Image style={loginStyle.imageLogo} source={require('../../../assets/Instagram-Logo.png')}/>
         <TextFieldMod placeholder="Email or user name" isValid={false}
                       onChangeText={text => setEmail(text)}
                       value={userName}
@@ -44,7 +44,7 @@ export function AuthUIPage(props) {
         <Text style={loginStyle.textOR}>OR</Text>
         <TouchableOpacity onPress={props.facebookAuth}>
             <View style={loginStyle.loginFacebookView}>
-                <Image style={loginStyle.facebookLogo} source={require('../../assets/fb.png')}/>
+                <Image style={loginStyle.facebookLogo} source={require('../../../assets/fb.png')}/>
                 <Text style={loginStyle.textLoginWithFacebook}>Log in with Facebook</Text>
             </View>
         </TouchableOpacity>
@@ -57,7 +57,7 @@ export function AuthUISingUpPage(props) {
     const [fullName, setFullName] = useState('');
     const [password, setPassword] = useState('');
     return <View style={loginStyle.loginForm}>
-        <Image style={loginStyle.imageLogo} source={require('../../assets/Instagram-Logo.png')}/>
+        <Image style={loginStyle.imageLogo} source={require('../../../assets/Instagram-Logo.png')}/>
         <TextFieldMod placeholder="Email" isValid={false}
                       onChangeText={text => setEmail(text)}
                       value={email}/>
@@ -75,7 +75,7 @@ export function AuthUISingUpPage(props) {
         <Text style={loginStyle.textOR}>OR</Text>
         <TouchableOpacity onPress={props.facebookAuth}>
             <View style={loginStyle.loginFacebookView}>
-                <Image style={loginStyle.facebookLogo} source={require('../../assets/fb.png')}/>
+                <Image style={loginStyle.facebookLogo} source={require('../../../assets/fb.png')}/>
                 <Text style={loginStyle.textLoginWithFacebook}>Signup with Facebook</Text>
             </View>
         </TouchableOpacity>

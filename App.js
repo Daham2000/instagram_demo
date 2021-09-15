@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
-import Login from "./view/login_page";
-import SignUp from "./view/sign_up_page";
+import Login from "./src/view/login_page";
+import SignUp from "./src/view/sign_up_page";
 import auth from '@react-native-firebase/auth';
 import {ActivityIndicator} from "react-native";
-import HomePage from "./view/home_page";
+import HomePage from "./src/view/home_page";
 
 const Stack = createNativeStackNavigator();
 
