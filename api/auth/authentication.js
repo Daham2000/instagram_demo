@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import {MassageType} from "../../view/constants/constants_auth";
 
-export function signUp(email, password): void {
+export function signUp(email, password): Promise<string> {
     auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
