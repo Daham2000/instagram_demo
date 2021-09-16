@@ -12,12 +12,16 @@ export const MEASUREMENT = {
     borderRadius:10,
 }
 
+const height = '100%';
+
 const loginStyle = StyleSheet.create({
     mainStyle: {
         flexDirection: "column",
         padding: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor:'white',
+        height:height
     },
     languageStyle: {
         marginTop: 8,

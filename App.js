@@ -4,10 +4,12 @@ import {NavigationContainer} from "@react-navigation/native";
 import Login from "./src/view/login_page";
 import SignUp from "./src/view/sign_up_page";
 import auth from '@react-native-firebase/auth';
-import {ActivityIndicator} from "react-native";
+import {ActivityIndicator, Platform, StatusBar, View} from "react-native";
 import HomePage from "./src/view/home_page";
 
 const Stack = createNativeStackNavigator();
+
+const STATUS_BAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBar.currentHeight;
 
 export default function App() {
     // Set an initializing state whilst Firebase connects
@@ -30,6 +32,7 @@ export default function App() {
         console.log("User not available")
         return (
             <NavigationContainer>
+                <StatusBarCompo/>
                 <Stack.Navigator screenOptions={{
                     headerShown: false
                 }}>
@@ -38,10 +41,24 @@ export default function App() {
                 </Stack.Navigator>
             </NavigationContainer>
         );
-    }
-    else{
+    } else {
         return (
-            <HomePage/>
+            <View>
+                <StatusBarCompo/>
+                <HomePage/>
+            </View>
         );
     }
 }
+
+function StatusBarCompo() {
+    return <View style={{height: STATUS_BAR_HEIGHT, backgroundColor: "#5E8D48"}}>
+        <StatusBar
+            animated={true}
+            backgroundColor="white"
+            barStyle={'dark-content'}
+            translucent={true}
+        />
+    </View>;
+}
+

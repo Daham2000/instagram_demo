@@ -1,16 +1,21 @@
-import React from 'react';
-import {Button, SafeAreaView} from "react-native";
+import React, {Component} from 'react';
+import {Button, SafeAreaView, View} from "react-native";
 import {HomeController} from "../controllers/home_controller";
 import {AppBarNative} from "./component/home_component";
+import {homeStyle} from "../styles/home_style";
 
-const HomePage = () => {
-    let ctrl = new HomeController();
-    return (
-        <SafeAreaView>
-            <AppBarNative/>
-            {/*<Button title="Logout" onPress={ctrl.logoutAction}/>*/}
-        </SafeAreaView>
-    );
+
+export default class HomePage extends Component {
+    render() {
+        let ctrl = new HomeController();
+        return (
+            <SafeAreaView style={homeStyle.mainStyle}>
+                <View>
+                    <AppBarNative/>
+                </View>
+                <View>
+                </View>
+            </SafeAreaView>
+        )
+    }
 }
-
-export default HomePage;
