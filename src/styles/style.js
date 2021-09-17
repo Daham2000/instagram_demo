@@ -8,9 +8,24 @@ export const COLORS = {
 }
 
 export const MEASUREMENT = {
-    widthTextField:365,
-    borderRadius:10,
+    widthTextField: 365,
+    borderRadius: 10,
+    bottomBarIconSize: 25
 }
+
+export const IconNames = {
+    ActiveHome: "home",
+    InActiveHome: "home-outline",
+    ActiveSearch: "search",
+    InActiveSearch: "search",
+    ActiveFavourite: "favorite",
+    InActiveFavourite: "favorite-outline",
+    ActiveAddPost: "add-circle",
+    InActiveAddPost: "add-circle-outline",
+    ActivePerson: "person",
+    InActivePerson: "person-outline",
+}
+
 
 const height = '100%';
 
@@ -20,8 +35,8 @@ const loginStyle = StyleSheet.create({
         padding: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:'white',
-        height:height
+        backgroundColor: 'white',
+        height: height
     },
     languageStyle: {
         marginTop: 8,
@@ -41,7 +56,7 @@ const loginStyle = StyleSheet.create({
     usernameStyle: {
         height: 50,
         margin: 10,
-        width:MEASUREMENT.widthTextField,
+        width: MEASUREMENT.widthTextField,
         borderWidth: 0.8,
         padding: 15,
         backgroundColor: COLORS.backgroundColor,
@@ -52,22 +67,22 @@ const loginStyle = StyleSheet.create({
     submit: {
         borderRadius: MEASUREMENT.borderRadius,
         borderWidth: 1,
-        padding:10,
+        padding: 10,
         marginTop: 10,
         borderColor: '#96dcff',
-        width:MEASUREMENT.widthTextField
+        width: MEASUREMENT.widthTextField
     },
     submitText: {
         color: '#96dcff',
-        fontSize:17,
+        fontSize: 17,
         textAlign: 'center',
     },
-    textForgotUserLogin:{
-        marginTop:25,
+    textForgotUserLogin: {
+        marginTop: 25,
         color: COLORS.textColor
     },
-    textOR:{
-        marginTop:15,
+    textOR: {
+        marginTop: 15,
         color: COLORS.textColor
     },
     loginFacebookView: {
@@ -75,17 +90,17 @@ const loginStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    textLoginWithFacebook:{
+    textLoginWithFacebook: {
         color: COLORS.blue,
-        fontWeight:'bold',
-        fontSize:16,
+        fontWeight: 'bold',
+        fontSize: 16,
     },
     facebookLogo: {
         width: 26,
-        marginRight:6,
+        marginRight: 6,
         resizeMode: 'contain'
     },
-    bottomBarView:{
+    bottomBarView: {
         flexDirection: "column",
         justifyContent: 'center',
         alignItems: 'flex-end',

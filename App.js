@@ -6,10 +6,20 @@ import SignUp from "./src/view/sign_up_page";
 import auth from '@react-native-firebase/auth';
 import {ActivityIndicator, Platform, StatusBar, View} from "react-native";
 import HomePage from "./src/view/home_page";
+import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
+import {homeStyle} from "./src/styles/home_style";
+import SearchPage from "./src/view/search_page";
+import ProfileView from "./src/view/profile_view";
+import FavouriteView from "./src/view/favourite_view";
+import AddPostView from "./src/view/add_post_view";
+import {IconNames, MEASUREMENT} from "./src/styles/style";
+import {Icon} from "react-native-elements";
+import MaterialCommunityIcon from "react-native-paper/src/components/MaterialCommunityIcon";
 
 const Stack = createNativeStackNavigator();
 
 const STATUS_BAR_HEIGHT = Platform.OS === "ios" ? 20 : StatusBar.currentHeight;
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
     // Set an initializing state whilst Firebase connects
@@ -42,13 +52,71 @@ export default function App() {
             </NavigationContainer>
         );
     } else {
+        console.log("User available")
         return (
-            <View>
+            <NavigationContainer>
                 <StatusBarCompo/>
-                <HomePage/>
-            </View>
+                <Tab.Navigator
+                    barStyle={
+                        homeStyle.bottomNaviBarStyle
+                    }
+                    labeled={false}
+                >
+                    <Tab.Screen
+                        name="Home"
+                        component={homePage}
+                        options={{
+                            tabBarIcon: ({focused}) => (
+                                <MaterialCommunityIcon name={focused === true ?
+                                    IconNames.ActiveHome : IconNames.InActiveHome}
+                                      color={'black'} size={MEASUREMENT.bottomBarIconSize}/>
+                            ),
+                        }}
+                    />
+                    <Tab.Screen name="Search" component={SearchPage}
+                                options={{
+                                    tabBarIcon: ({focused}) => (
+                                        <Icon
+                                            name={focused === true ?
+                                                IconNames.ActiveSearch : IconNames.InActiveSearch}
+                                            size={MEASUREMENT.bottomBarIconSize}/>
+                                    ),
+                                }}/>
+                    <Tab.Screen name="AddPost" component={AddPostView}
+                                options={{
+                                    tabBarIcon: ({focused}) => (
+                                        <Icon
+                                            name={focused === true ? IconNames.ActiveAddPost : IconNames.InActiveAddPost}
+                                            size={MEASUREMENT.bottomBarIconSize}/>
+                                    ),
+                                }}/>
+                    <Tab.Screen name="Favourite" component={FavouriteView}
+                                options={{
+                                    tabBarIcon: ({focused}) => (
+                                        <Icon name={focused === true ?
+                                            IconNames.ActiveFavourite : IconNames.InActiveFavourite}
+                                              size={MEASUREMENT.bottomBarIconSize}/>
+                                    ),
+                                }}/>
+                    <Tab.Screen name="Profile" component={ProfileView}
+                                options={{
+                                    tabBarIcon: ({focused}) => (
+                                        <Icon name={focused === true ?
+                                            IconNames.ActivePerson : IconNames.InActivePerson}
+                                              size={MEASUREMENT.bottomBarIconSize}/>
+                                    ),
+                                }}/>
+                </Tab.Navigator>
+            </NavigationContainer>
         );
     }
+}
+
+
+function homePage() {
+    return <View>
+        <HomePage/>
+    </View>;
 }
 
 function StatusBarCompo() {
