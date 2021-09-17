@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, SafeAreaView} from "react-native";
-import loginStyle from "../styles/style";
-import {BottomView, AuthUIPage} from "./component/basic_login_component";
-import {AuthController} from "../controllers/auth_controller";
+import loginStyle from "../../styles/style";
+import {BottomView, AuthUIPage} from "../component/basic_login_component";
+import {AuthController} from "../../controllers/auth_controller/auth_controller";
 
 const Login = ({navigation}) => {
     let ctrl = new AuthController();

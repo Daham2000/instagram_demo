@@ -6,7 +6,7 @@ import loginStyle from "../../styles/style";
 import {Icon} from "react-native-elements";
 import {DividerMod} from "./basic_component";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import HomePage from "../home_page";
+import HomePage from "../home_page/home_page";
 
 export function AppBarNative() {
     return <Appbar style={homeStyle.appbar}>

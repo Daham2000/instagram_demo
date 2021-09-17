@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {SafeAreaView, ScrollView, View} from "react-native";
-import {AppBarNative, PostList, StoryList} from "./component/home_component";
-import {homeStyle} from "../styles/home_style";
+import {AppBarNative, PostList, StoryList} from "../component/home_component";
+import {homeStyle} from "../../styles/home_style";
 
 const DATA = [
     {
