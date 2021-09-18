@@ -7,6 +7,7 @@ import {Button} from "react-native-paper";
 export default class ProfileView extends Component {
     render() {
         let ctrl = new HomeController();
+        ctrl.getAllPost().then(r => console.log('GetAllPost called...'));
         return <SafeAreaView style={{backgroundColor:'white'}}>
             <Button mode="contained"
                     onPress={() => ctrl.logoutAction()}>
