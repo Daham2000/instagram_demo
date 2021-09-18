@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, View} from "react-native";
 import {AppBarNative, PostList, StoryList} from "../component/home_component";
 import {homeStyle} from "../../styles/home_style";
+import {HomeController} from "../../controllers/home_page_controller/home_controller";
 
 const DATA = [
     {
@@ -52,18 +53,17 @@ const DATA = [
     },
 ];
 
-export default class HomePage extends Component {
-    render() {
-        return (
-            <SafeAreaView>
-                <ScrollView style={homeStyle.mainStyle}>
-                    <View>
-                        <AppBarNative/>
-                    </View>
-                    <StoryList data={DATA}/>
-                    <PostList data={DATA}/>
-                </ScrollView>
-            </SafeAreaView>
-        )
-    }
+export default function HomePage() {
+    return (
+        <SafeAreaView>
+            <ScrollView style={homeStyle.mainStyle}>
+                <View>
+                    <AppBarNative/>
+                </View>
+                <StoryList data={DATA}/>
+                <PostList/>
+            </ScrollView>
+        </SafeAreaView>
+    )
+
 }

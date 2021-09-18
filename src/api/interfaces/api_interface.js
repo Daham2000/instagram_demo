@@ -1,9 +1,9 @@
-export class ApiInterface {
-    getAll(): Promise<void>;
+export default class ApiInterface {
+    getAll(): Promise<void>{};
 
-    get(): Promise<void>;
+    get(): Promise<void>{};
 
-    add(): Promise<void>;
+    add(): Promise<void>{};
 
-    update(): Promise<void>;
+    update(): Promise<void>{};
 }

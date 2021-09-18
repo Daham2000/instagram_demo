@@ -5,12 +5,12 @@ import {HomeController} from "../../controllers/home_page_controller/home_contro
 import {Button} from "react-native-paper";
 
 export default class ProfileView extends Component {
+
     render() {
         let ctrl = new HomeController();
-        ctrl.getAllPost().then(r => console.log('GetAllPost called...'));
-        return <SafeAreaView style={{backgroundColor:'white'}}>
+        return <SafeAreaView style={{backgroundColor: 'white'}}>
             <Button mode="contained"
-                    onPress={() => ctrl.logoutAction()}>
+                    onPress={() => ctrl.addPost()}>
                 Logout
             </Button>
         </SafeAreaView>;

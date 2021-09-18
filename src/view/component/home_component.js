@@ -1,12 +1,10 @@
 import {Appbar, Divider} from "react-native-paper";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {homeStyle} from "../../styles/home_style";
 import {FlatList, Image, Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import loginStyle from "../../styles/style";
-import {Icon} from "react-native-elements";
 import {DividerMod} from "./basic_component";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import HomePage from "../home_page/home_page";
+import {HomeController} from "../../controllers/home_page_controller/home_controller";
 
 export function AppBarNative() {
     return <Appbar style={homeStyle.appbar}>
@@ -68,27 +66,33 @@ const styles = StyleSheet.create({
     },
 });
 
-export function PostList(props) {
+export function PostList() {
+    const [postList, setPostList] = useState([]);
+    const ctrl = new HomeController();
     const renderItem = ({item}) => (
-        <Post title={item.name} image={item.image} mainImage={item.post} des={item.description}/>
+        <Post title={item.name} profile={item.profile} mainImage={item.image} des={item.description}/>
     );
+    useEffect(async () => {
+        const data = await ctrl.getAllPost();
+        console.log(data[0]);
+        setPostList(data);
+    }, []);
 
     return <View>
         <FlatList
             showsHorizontalScrollIndicator={false}
-            data={props.data}
+            data={postList}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
         />
         <DividerMod/>
     </View>;
 }
 
-const Post = ({title, image, mainImage, des}) => (
+const Post = ({title, profile, mainImage, des}) => (
     <View style={homeStyle.postMainView}>
         <View style={homeStyle.postMainTopView}>
             <View style={homeStyle.postTopView}>
-                <Image style={homeStyle.postImage} source={{uri: image}}/>
+                <Image style={homeStyle.postImage} source={{uri: profile}}/>
                 <Text style={homeStyle.postTitle}>{title}</Text>
                 <Text> > </Text>
                 <TouchableOpacity>
