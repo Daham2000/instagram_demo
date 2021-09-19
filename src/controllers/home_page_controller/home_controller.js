@@ -13,7 +13,7 @@ export class HomeController {
         return postApi.getAll();
     }
 
-    async addPost(): Promise<any> {
-        return postApi.add();
+    async addPost(imagePath:string,imageName:string,description:string): Promise<any> {
+        return postApi.add(imagePath,imageName,description);
     }
 }

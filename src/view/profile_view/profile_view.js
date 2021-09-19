@@ -10,7 +10,7 @@ export default class ProfileView extends Component {
         let ctrl = new HomeController();
         return <SafeAreaView style={{backgroundColor: 'white'}}>
             <Button mode="contained"
-                    onPress={() => ctrl.addPost()}>
+                    onPress={() => ctrl.logoutAction()}>
                 Logout
             </Button>
         </SafeAreaView>;
