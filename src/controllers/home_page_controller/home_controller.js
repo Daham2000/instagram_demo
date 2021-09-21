@@ -1,11 +1,13 @@
 import Authentication from "../../api/auth/authentication";
 import PostApi from "../../api/post_api/post_api";
+import UserApi from "../../api/user_api/user_api_impl";
 
 const authentication = Authentication.getInstance();
 const postApi = PostApi.getInstance();
+const userApi = UserApi.getInstance();
 
 export class HomeController {
-    logoutAction() {
+    logoutAction(): void {
         authentication.logOut();
     }
 
@@ -13,7 +15,19 @@ export class HomeController {
         return postApi.getAll();
     }
 
-    async addPost(imagePath:string,imageName:string,description:string): Promise<any> {
-        return postApi.add(imagePath,imageName,description);
+    async addPost(imagePath: string, imageName: string, description: string): Promise<any> {
+        return postApi.add(imagePath, imageName, description);
+    }
+
+    async followUser(uid: string): Promise<void> {
+        await userApi.followUser(uid);
+    }
+
+    async checkIfFollower(uid: string, list: []): Promise<boolean> {
+        return list.includes(uid);
+    }
+
+    async getFollowers(): Promise<[]> {
+        return await userApi.getFollowers();
     }
 }

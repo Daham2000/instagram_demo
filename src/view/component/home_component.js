@@ -1,10 +1,11 @@
 import {Appbar, Divider} from "react-native-paper";
 import React, {useEffect, useState} from 'react';
 import {homeStyle} from "../../styles/home_style";
-import {FlatList, Image, Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import {FlatList, Image, Text, View, StyleSheet, TouchableHighlight} from "react-native";
 import loginStyle from "../../styles/style";
 import {DividerMod} from "./basic_component";
 import {HomeController} from "../../controllers/home_page_controller/home_controller";
+import auth from "@react-native-firebase/auth";
 
 export function AppBarNative() {
     return <Appbar style={homeStyle.appbar}>
@@ -66,15 +67,20 @@ const styles = StyleSheet.create({
     },
 });
 
-export function PostList() {
+export function PostList(props) {
     const [postList, setPostList] = useState([]);
+    const [followersList, setFollowersList] = useState([]);
     const ctrl = new HomeController();
+    const uid = auth().currentUser.uid;
     const renderItem = ({item}) => (
-        <Post title={item.name} profile={item.profile} mainImage={item.image} des={item.description}/>
+        <Post title={item.name} profile={item.profile} mainImage={item.image} des={item.description}
+              isSameUser={item.uid === uid} onPressFollow={props.onPressFollow} uid={item.uid}
+              followersList={followersList===undefined? []:followersList}/>
     );
     useEffect(async () => {
         const data = await ctrl.getAllPost();
-        console.log(data[0]);
+        const list = await ctrl.getFollowers();
+        setFollowersList(list);
         setPostList(data);
     }, []);
 
@@ -88,16 +94,20 @@ export function PostList() {
     </View>;
 }
 
-const Post = ({title, profile, mainImage, des}) => (
+const Post = ({title, profile, mainImage, des, isSameUser, uid, onPressFollow, followersList}) => (
     <View style={homeStyle.postMainView}>
         <View style={homeStyle.postMainTopView}>
             <View style={homeStyle.postTopView}>
                 <Image style={homeStyle.postImage} source={{uri: profile}}/>
                 <Text style={homeStyle.postTitle}>{title}</Text>
-                <Text> > </Text>
-                <TouchableOpacity>
-                    <Text style={homeStyle.followTextStyle}> Follow </Text>
-                </TouchableOpacity>
+                {isSameUser || followersList.includes(uid) ? <Text/>:<Text> > </Text>}
+                {isSameUser || followersList.includes(uid) ? <Text/> :
+                    <TouchableHighlight onPress={() => {
+                        onPressFollow(uid);
+                    }
+                    }>
+                        <Text style={homeStyle.followTextStyle}> Follow </Text>
+                    </TouchableHighlight>}
             </View>
             <Image resizeMode="contain" style={homeStyle.postMoreIcon} source={require('../../../assets/more.png')}/>
         </View>

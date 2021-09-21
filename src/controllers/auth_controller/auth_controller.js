@@ -9,9 +9,9 @@ export class AuthController {
         return await authentication.login(email, password);
     }
 
-    async signup(email: string, password: string): Promise<string> {
+    async signup(email: string, password: string,username:string, firstname:string): Promise<string> {
         console.log(email);
-        return await authentication.signUp(email, password);
+        return await authentication.signUp(email, password,username,firstname);
     }
 
     async FaceBookLogin(): Promise<any> {

@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import {MassageType} from "../../view/constants/constants_auth";
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import firestore from "@react-native-firebase/firestore";
 
 export default class Authentication {
 
@@ -11,11 +12,23 @@ export default class Authentication {
         return Authentication._instance;
     }
 
-    signUp(email, password): Promise<string> {
+    signUp(email, password, username, firstname): Promise<string> {
         auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
                 console.log(MassageType.massages.signupMsg);
+                const usersCollection = firestore().collection('users');
+                const uid = auth().currentUser.uid;
+                console.log(uid);
+                usersCollection
+                    .add({
+                        username: username,
+                        firstname: firstname,
+                        uid: uid
+                    })
+                    .then(() => {
+                        console.log('User added!');
+                    });
                 return MassageType.massages.signupMsg;
             })
             .catch(error => {
@@ -54,7 +67,6 @@ export default class Authentication {
     }
 
     async facebookLogin(): Promise<void> {
-        console.log("Called")
         // Attempt login with permissions
         const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
@@ -71,7 +83,7 @@ export default class Authentication {
 
         // Create a Firebase credential with the AccessToken
         const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-
+        console.log(auth.name);
         // Sign-in the user with the credential
         return auth().signInWithCredential(facebookCredential);
     }

@@ -53,6 +53,13 @@ const DATA = [
     },
 ];
 
+function followUser(uid: string) {
+    const ctrl = new HomeController();
+    ctrl.followUser(uid).then(() => {
+        alert("Followers added to the system");
+    });
+}
+
 export default function HomePage() {
     return (
         <SafeAreaView>
@@ -61,7 +68,7 @@ export default function HomePage() {
                     <AppBarNative/>
                 </View>
                 <StoryList data={DATA}/>
-                <PostList/>
+                <PostList onPressFollow={followUser}/>
             </ScrollView>
         </SafeAreaView>
     )

@@ -10,7 +10,7 @@ export function LoginButton(props) {
                     props.onPress(props.username, props.password);
                     console.log(props.username);
                 } else {
-                    props.onPress(props.email, props.password);
+                    props.onPress(props.email, props.password, props.username, props.fullName);
                 }
             }}
             style={loginStyle.submit}
