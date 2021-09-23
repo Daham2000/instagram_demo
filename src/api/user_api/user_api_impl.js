@@ -54,4 +54,40 @@ export default class UserApi extends UserInterface {
             });
         return followers;
     }
+
+
+    async createChatThread(uid: string, name: string): Promise<void> {
+        if (auth().currentUser.uid !== uid) {
+            firestore()
+                .collection('MESSAGE_THREADS')
+                .where('uid', '==', uid).where('myUid', '==',
+                auth().currentUser.uid).get().then(result => {
+                console.log(result);
+                // create new thread using firebase & firestore
+                firestore()
+                    .collection('MESSAGE_THREADS')
+                    .add({
+                        name: name,
+                        uid: uid,
+                        myUid: auth().currentUser.uid,
+                        latestMessage: {
+                            text: `${name} created. Welcome!`,
+                            createdAt: new Date().getTime()
+                        }
+                    })
+                    .then(docRef => {
+                        docRef.collection('MESSAGES').add({
+                            text: `Chat with ${name}!`,
+                            createdAt: new Date().getTime(),
+                            system: true
+                        }).then(() => {
+                            console.log("New chat is created...")
+                        })
+                    })
+
+            })
+
+        }
+
+    }
 }

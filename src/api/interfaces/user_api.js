@@ -4,4 +4,6 @@ export default class UserInterface {
 
     async getFollowers(): Promise<[]> {
     }
+
+    async createChatThread(uid:string,name:string):Promise<void>{}
 }

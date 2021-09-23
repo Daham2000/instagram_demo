@@ -8,13 +8,14 @@ import {ActivityIndicator, Platform, StatusBar, View} from "react-native";
 import HomePage from "./src/view/home_page/home_page";
 import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
 import {homeStyle} from "./src/styles/home_style";
-import SearchPage from "./src/view/search_page/search_page";
 import ProfileView from "./src/view/profile_view/profile_view";
 import FavouriteView from "./src/view/favourite_view/favourite_view";
 import {IconNames, MEASUREMENT} from "./src/styles/style";
 import {Icon} from "react-native-elements";
 import MaterialCommunityIcon from "react-native-paper/src/components/MaterialCommunityIcon";
 import AddPostView from "./src/view/add_post_page/add_post_view";
+import SearchStackScreen from "./src/view/search_page/search_page";
+import HomeStackScreen from "./src/view/home_page/home_page";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,17 +64,17 @@ export default function App() {
                     labeled={false}
                 >
                     <Tab.Screen
-                        name="Home"
-                        component={homePage}
+                        name="HomeStack"
+                        component={HomeStackScreen}
                         options={{
                             tabBarIcon: ({focused}) => (
                                 <MaterialCommunityIcon name={focused === true ?
                                     IconNames.ActiveHome : IconNames.InActiveHome}
-                                      color={'black'} size={MEASUREMENT.bottomBarIconSize}/>
+                                                       color={'black'} size={MEASUREMENT.bottomBarIconSize}/>
                             ),
                         }}
                     />
-                    <Tab.Screen name="Search" component={SearchPage}
+                    <Tab.Screen name="SearchStack" component={SearchStackScreen}
                                 options={{
                                     tabBarIcon: ({focused}) => (
                                         <Icon
@@ -107,6 +108,7 @@ export default function App() {
                                     ),
                                 }}/>
                 </Tab.Navigator>
+
             </NavigationContainer>
         );
     }

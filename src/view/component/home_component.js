@@ -1,7 +1,16 @@
 import {Appbar, Divider} from "react-native-paper";
 import React, {useEffect, useState} from 'react';
 import {homeStyle} from "../../styles/home_style";
-import {FlatList, Image, Text, View, StyleSheet, TouchableHighlight} from "react-native";
+import {
+    FlatList,
+    Image,
+    Text,
+    View,
+    StyleSheet,
+    TouchableHighlight,
+    TouchableOpacity,
+    ActivityIndicator
+} from "react-native";
 import loginStyle from "../../styles/style";
 import {DividerMod} from "./basic_component";
 import {HomeController} from "../../controllers/home_page_controller/home_controller";
@@ -75,7 +84,7 @@ export function PostList(props) {
     const renderItem = ({item}) => (
         <Post title={item.name} profile={item.profile} mainImage={item.image} des={item.description}
               isSameUser={item.uid === uid} onPressFollow={props.onPressFollow} uid={item.uid}
-              followersList={followersList===undefined? []:followersList}/>
+              followersList={followersList === undefined ? [] : followersList} navigator={props.navigator}/>
     );
     useEffect(async () => {
         const data = await ctrl.getAllPost();
@@ -94,41 +103,57 @@ export function PostList(props) {
     </View>;
 }
 
-const Post = ({title, profile, mainImage, des, isSameUser, uid, onPressFollow, followersList}) => (
-    <View style={homeStyle.postMainView}>
-        <View style={homeStyle.postMainTopView}>
-            <View style={homeStyle.postTopView}>
-                <Image style={homeStyle.postImage} source={{uri: profile}}/>
-                <Text style={homeStyle.postTitle}>{title}</Text>
-                {isSameUser || followersList.includes(uid) ? <Text/>:<Text> > </Text>}
-                {isSameUser || followersList.includes(uid) ? <Text/> :
-                    <TouchableHighlight onPress={() => {
-                        onPressFollow(uid);
-                    }
-                    }>
-                        <Text style={homeStyle.followTextStyle}> Follow </Text>
-                    </TouchableHighlight>}
+
+function Post({title, profile, mainImage, des, isSameUser, uid, onPressFollow, followersList, navigator}) {
+    const [loader, setLoader] = useState(false);
+    if (loader === true) {
+        return <ActivityIndicator/>
+    } else {
+        return <View style={homeStyle.postMainView}>
+            <View style={homeStyle.postMainTopView}>
+                <View style={homeStyle.postTopView}>
+                    <TouchableOpacity onPress={async () => {
+                        setLoader(true);
+                        const ctrl = new HomeController();
+                        await ctrl.createChatThread(uid,title).then(() => {
+                            setLoader(false);
+                        });
+                        navigator.navigate('ChatRoom');
+                    }}>
+                        <Image style={homeStyle.postImage} source={{uri: profile}}/>
+                    </TouchableOpacity>
+                    <Text style={homeStyle.postTitle}>{title}</Text>
+                    {isSameUser || followersList.includes(uid) ? <Text/> : <Text> > </Text>}
+                    {isSameUser || followersList.includes(uid) ? <Text/> :
+                        <TouchableHighlight onPress={() => {
+                            onPressFollow(uid);
+                        }
+                        }>
+                            <Text style={homeStyle.followTextStyle}> Follow </Text>
+                        </TouchableHighlight>}
+                </View>
+                <Image resizeMode="contain" style={homeStyle.postMoreIcon}
+                       source={require('../../../assets/more.png')}/>
             </View>
-            <Image resizeMode="contain" style={homeStyle.postMoreIcon} source={require('../../../assets/more.png')}/>
-        </View>
-        <View>
-            <Image style={homeStyle.postMainImage} source={{uri: mainImage}}/>
-        </View>
-        <View style={homeStyle.postMainBottomView}>
-            <View style={homeStyle.postBottomLeftSide}>
-                <Image resizeMode="contain"
-                       style={homeStyle.postBottomIcon} source={require('../../../assets/like.png')}/>
-                <Image resizeMode="contain"
-                       style={homeStyle.postBottomIcon} source={require('../../../assets/comment.png')}/>
-                <Image resizeMode="contain"
-                       style={homeStyle.postBottomIcon} source={require('../../../assets/share.png')}/>
+            <View>
+                <Image style={homeStyle.postMainImage} source={{uri: mainImage}}/>
             </View>
-            <Image resizeMode="contain"
-                   style={homeStyle.postBottomIcon} source={require('../../../assets/save.png')}/>
+            <View style={homeStyle.postMainBottomView}>
+                <View style={homeStyle.postBottomLeftSide}>
+                    <Image resizeMode="contain"
+                           style={homeStyle.postBottomIcon} source={require('../../../assets/like.png')}/>
+                    <Image resizeMode="contain"
+                           style={homeStyle.postBottomIcon} source={require('../../../assets/comment.png')}/>
+                    <Image resizeMode="contain"
+                           style={homeStyle.postBottomIcon} source={require('../../../assets/share.png')}/>
+                </View>
+                <Image resizeMode="contain"
+                       style={homeStyle.postBottomIcon} source={require('../../../assets/save.png')}/>
+            </View>
+            <Text style={homeStyle.postDescriptionStyle}>
+                {des}
+            </Text>
+            <DividerMod/>
         </View>
-        <Text style={homeStyle.postDescriptionStyle}>
-            {des}
-        </Text>
-        <DividerMod/>
-    </View>
-)
+    }
+}

@@ -30,4 +30,8 @@ export class HomeController {
     async getFollowers(): Promise<[]> {
         return await userApi.getFollowers();
     }
+
+    async createChatThread(uid: string, name: string): Promise<void> {
+        return await userApi.createChatThread(uid,name);
+    }
 }

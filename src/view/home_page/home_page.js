@@ -1,8 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {SafeAreaView, ScrollView, View} from "react-native";
 import {AppBarNative, PostList, StoryList} from "../component/home_component";
 import {homeStyle} from "../../styles/home_style";
 import {HomeController} from "../../controllers/home_page_controller/home_controller";
+import ChatRoom from "../search_page/ChatRoom";
+import Messages from "../search_page/Messages";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+
+const HomeStack = createNativeStackNavigator();
+
+export default function HomeStackScreen() {
+    return (
+        <HomeStack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <HomeStack.Screen name="Home" component={HomePage}/>
+            <HomeStack.Screen name="ChatRoom" component={ChatRoom}/>
+            <HomeStack.Screen
+                name='Messages'
+                component={Messages}
+                options={({route}) => ({
+                    title: route.params.thread.name
+                })}
+            />
+        </HomeStack.Navigator>
+    );
+}
 
 const DATA = [
     {
@@ -60,7 +83,7 @@ function followUser(uid: string) {
     });
 }
 
-export default function HomePage() {
+export function HomePage({navigation}) {
     return (
         <SafeAreaView>
             <ScrollView style={homeStyle.mainStyle}>
@@ -68,7 +91,7 @@ export default function HomePage() {
                     <AppBarNative/>
                 </View>
                 <StoryList data={DATA}/>
-                <PostList onPressFollow={followUser}/>
+                <PostList onPressFollow={followUser} navigator={navigation}/>
             </ScrollView>
         </SafeAreaView>
     )
